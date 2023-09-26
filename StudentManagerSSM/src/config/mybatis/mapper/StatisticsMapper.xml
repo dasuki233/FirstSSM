@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.StatisticsDao">
+  	<select id="findList" parameterType="Map" resultType="Statistics">
+  		SELECT independent.id,independent.sdId,site,duikou,independent.remark,pjgl.score
+        FROM  independent  left join pjgl ON independent.sdId=pjgl.sdId 
+        where independent.sdId like #{sdId}
+        limit #{offset},#{pageSize}
+  	</select>
+  	<select id="findAll" resultType="Student">
+  		select * from Student
+  	</select>
+  	<select id="getTotal" parameterType="Map" resultType="Integer">
+  		select count(id) from independent where sdId like #{sdId} limit #{offset},#{pageSize}
+  	</select>
+  	<select id="count"  resultType="int">
+  	SELECT
+	CONCAT(
+		CONVERT (
+			SUM( CASE WHEN duikou = '是' THEN 1 ELSE 0 END ) * 100 / COUNT(duikou),
+		DECIMAL ( 18, 2 )),
+		'%' 
+	) AS countAll,
+	count(duikou) AS sumAll
+    FROM independent
+  	</select>
+</mapper>

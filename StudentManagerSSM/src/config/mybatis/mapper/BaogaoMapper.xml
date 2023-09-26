@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.BaogaoDao">
+  	<select id="findList" parameterType="Map" resultType="Baogao">
+  		select * from baogao where sdId like #{sdId} limit #{offset},#{pageSize}
+  	</select>
+  	<select id="findAll" resultType="student">
+  		select * from student 
+  	</select>
+  	<select id="getTotal" parameterType="Map" resultType="Integer">
+  		select count(id) from baogao where sdId like #{sdId}  limit #{offset},#{pageSize}
+  	</select>
+  	<update id="add" parameterType="Baogao">
+  		insert into baogao(id,sdId,former,now,reason) values(null,#{sdId},#{former},#{now},#{reason})
+  	</update>
+  	<update id="edit" parameterType="Baogao">
+  		update baogao set sdId =#{sdId}, former = #{former},now = #{now},reason = #{reason}  where id = #{id}
+  	</update>
+  	<update id="delete" parameterType="String">
+  		delete from baogao where id in (${value})
+  	</update>
+</mapper>

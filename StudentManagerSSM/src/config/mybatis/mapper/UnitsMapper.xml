@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.UnitsDao">
+  	<select id="findList" parameterType="Map" resultType="Units">
+  		SELECT * FROM company
+	    LEFT JOIN teacher  ON company.tcId = teacher.username  
+	    where sdId like #{sdId} limit #{offset},#{pageSize}
+  	</select>
+  	<select id="findAll" resultType="student">
+  		select * from student
+  	</select>
+  	<select id="getTotal" parameterType="Map" resultType="Integer">
+  		select count(id) from company where sdId like #{sdId} limit #{offset},#{pageSize}
+  	</select>
+  	<update id="add" parameterType="Units">
+  		insert into company(id,sdId,name,scale,qualification,nature,pattern,job,tcId) values(null,#{sdId},#{name},#{scale},#{qualification},#{nature},#{pattern},#{job},#{tcId})
+  	</update>
+  	<update id="edit" parameterType="Units">
+  		update company set sdId =#{sdId}, name = #{name},scale = #{scale},qualification = #{qualification},nature = #{nature},pattern = #{pattern} ,job = #{job} ,tcId = #{tcId}  where id = #{id}
+  	</update>
+  	<update id="delete" parameterType="String">
+  		delete from company where id in (${value})
+  	</update>
+</mapper>

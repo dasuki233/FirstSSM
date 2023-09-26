@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ischoolbar.programmer.dao.ApplymsgDao">
+  	<select id="findList" parameterType="Map" resultType="Applymsg">
+  		select * from applymsg where name like #{name} limit #{offset},#{pageSize}
+  	</select>
+  	<select id="findAll" resultType="student">
+  		select * from student
+  	</select>
+  	<select id="getTotal" parameterType="Map" resultType="Integer">
+  		select count(id) from applymsg where name like #{name} limit #{offset},#{pageSize}
+  	</select>
+  	<update id="add" parameterType="Applymsg">
+  		insert into applymsg(id,name,job,site,salary,pattern) values(null,#{name},#{job},#{site},#{salary},#{pattern})
+  	</update>
+  	<update id="edit" parameterType="Applymsg">
+  		update applymsg set name =#{name}, job = #{job},site = #{site},salary = #{salary},pattern = #{pattern} where id = #{id}
+  	</update>
+  	<update id="delete" parameterType="Applymsg">
+  		delete from applymsg where id in (${value})
+  	</update>
+</mapper>
